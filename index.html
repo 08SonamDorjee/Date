@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Special Surprise For You 🌸</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(180deg, #ffd6e5 0%, #ffb3ce 50%, #f689ac 100%);
+      font-family: 'Quicksand', sans-serif;
+      color: #631934;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Floating Background Elements */
+    .bg-decor {
+      position: fixed;
+      font-size: 1.4rem;
+      opacity: 0.4;
+      animation: floatUp 7s infinite linear;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      20% { opacity: 0.55; }
+      80% { opacity: 0.55; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    .clouds {
+      position: fixed;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 110px;
+      background: radial-gradient(circle at 50% 100%, #ffffffaa 38px, transparent 40px);
+      background-size: 76px 110px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .container {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 90%;
+      max-width: 440px;
+      padding: 24px 16px;
+    }
+
+    .avatar-frame {
+      width: 145px;
+      height: 145px;
+      background: #fff;
+      border: 4px solid #732241;
+      box-shadow: 4px 4px 0px #e64980, inset 3px 3px 0px #ffe4ec;
+      border-radius: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .avatar-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 16px;
+      color: #5c142e;
+    }
+
+    p.subtext {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #8c2e4e;
+      margin-top: -6px;
+      margin-bottom: 22px;
+      line-height: 1.5;
+    }
+
+    .btn-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      position: relative;
+      min-height: 70px;
+      width: 100%;
+    }
+
+    button {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 12px 24px;
+      cursor: pointer;
+      border: 3px solid #732241;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #732241;
+      box-shadow: 3px 3px 0px #732241;
+      transition: transform 0.15s ease, background-color 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #fff0f5;
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px #732241;
+    }
+
+    .btn-yes {
+      background: #ff4d79;
+      color: #ffffff;
+      box-shadow: 3px 3px 0px #732241;
+    }
+
+    .btn-yes:hover {
+      background: #ff3366;
+    }
+
+    .btn-no {
+      background: #ffffff;
+    }
+
+    .sub-msg {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #732241;
+      margin-top: 14px;
+      min-height: 20px;
+    }
+
+    input[type="date"], input[type="text"] {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 12px 18px;
+      border: 3px solid #732241;
+      border-radius: 14px;
+      background: #ffffff;
+      color: #732241;
+      outline: none;
+      box-shadow: 3px 3px 0px #ff6584;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 85%;
+    }
+
+    .grid-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .option-card {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 14px 8px;
+      background: #fff;
+      border: 3px solid #732241;
+      border-radius: 16px;
+      box-shadow: 3px 3px 0px #ff6584;
+      cursor: pointer;
+      line-height: 1.4;
+      transition: transform 0.15s ease;
+    }
+
+    .option-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .option-card.selected {
+      background: #ff4d79;
+      color: #fff;
+      box-shadow: 3px 3px 0px #732241;
+    }
+
+    .ticket-box {
+      background: #ffffffdd;
+      border: 3px dashed #732241;
+      border-radius: 18px;
+      padding: 18px 16px;
+      width: 100%;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 2;
+      margin-bottom: 22px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 15;
+      justify-content: center;
+      align-items: center;
+      padding: 14px;
+    }
+
+    .retro-window {
+      background: #fff;
+      border: 4px solid #732241;
+      box-shadow: 6px 6px 0px #ff6584;
+      width: 100%;
+      max-width: 390px;
+      border-radius: 18px;
+      overflow: hidden;
+      animation: pop 0.25s ease-out;
+    }
+
+    .window-header {
+      background: #ffccd9;
+      border-bottom: 3px solid #732241;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .window-close {
+      cursor: pointer;
+      border: 2px solid #732241;
+      background: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .window-body {
+      padding: 24px 20px;
+      font-family: 'Caveat', cursive;
+      font-size: 1.45rem;
+      line-height: 1.45;
+      text-align: left;
+      color: #4f1226;
+      max-height: 75vh;
+      overflow-y: auto;
+    }
+
+    /* Games */
+    .game-arena {
+      width: 100%;
+      min-height: 180px;
+      background: #fff;
+      border: 3px dashed #732241;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .heart-target {
+      position: absolute;
+      font-size: 2.2rem;
+      cursor: pointer;
+      animation: pulse 0.8s infinite alternate;
+    }
+
+    .fortune-cookie {
+      font-size: 3.8rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .fortune-cookie:active {
+      transform: scale(0.9);
+    }
+
+    /* Memory Match Game */
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      width: 100%;
+    }
+
+    .memory-card {
+      background: #ffe3ec;
+      border: 2px solid #732241;
+      border-radius: 12px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .memory-card.flipped {
+      background: #ffffff;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.85); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.15); }
+    }
+
+    .screen { display: none; flex-direction: column; align-items: center; width: 100%; }
+    .screen.active { display: flex; }
+  </style>
+</head>
+<body>
+
+<div class="bg-decor" style="left: 10%; animation-delay: 0s;">🌸</div>
+<div class="bg-decor" style="left: 30%; animation-delay: 2s;">💖</div>
+<div class="bg-decor" style="left: 65%; animation-delay: 4s;">✨</div>
+<div class="bg-decor" style="left: 85%; animation-delay: 1.5s;">🌷</div>
+<div class="bg-decor" style="left: 48%; animation-delay: 3.5s;">🎀</div>
+
+<div class="clouds"></div>
+
+<div class="container">
+
+  <!-- Step 1: Proposal (Original cute heart sticker) -->
+  <div id="step-1" class="screen active">
+    <div class="avatar-frame">
+      <img src="https://media.giphy.com/media/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute Heart Sticker">
+    </div>
+    <h1>Will you go out with me? 🌸</h1>
+    <div class="btn-group">
+      <button class="btn-yes" id="btn-yes" onclick="goToStep(2)">YES 💕</button>
+      <button class="btn-no" id="btn-no" onclick="handleNoClick()">No</button>
+    </div>
+    <div class="sub-msg" id="sub-msg"></div>
+  </div>
+
+  <!-- Step 2: Yay Screen -->
+  <div id="step-2" class="screen">
+    <div class="avatar-frame">
+      <img src="https://media.giphy.com/media/T86i6yDyOYz7J6dPhf/giphy.gif" alt="Happy Bears">
+    </div>
+    <h1>YAY! 🥳💖</h1>
+    <p class="subtext">I knew you'd say yes! Before we plan, let's play a cute little game to de-stress.</p>
+    <button onclick="goToStep('game1')">PLAY MINI-GAME 1 →</button>
+  </div>
+
+  <!-- MINI GAME 1: Catch Heart -->
+  <div id="step-game1" class="screen">
+    <h1>Catch the Love Heart! 🎯</h1>
+    <p class="subtext">Catch it 3 times to unlock our calendar!</p>
+    <div class="game-arena" id="arena1">
+      <div id="moving-heart" class="heart-target" onclick="catchHeart()">💖</div>
+    </div>
+    <div class="sub-msg" id="game1-score">Score: 0 / 3</div>
+  </div>
+
+  <!-- Step 3: Pick a Date (Cute aesthetic planning GIF) -->
+  <div id="step-3" class="screen">
+    <div class="avatar-frame">
+      <img src="https://media.giphy.com/media/LnQjpWaON8nhr21vNW/giphy.gif" alt="Cute Planner Sticker">
+    </div>
+    <h1>PICK A DATE 🗓️</h1>
+    <p class="subtext">Choose the day for our cute post-exam celebration!</p>
+    <input type="date" id="date-input">
+    <button onclick="saveDate()">CONTINUE →</button>
+  </div>
+
+  <!-- MINI GAME 2: Fortune Cookie -->
+  <div id="step-game2" class="screen">
+    <h1>Exam Stress-Buster Cookie 🥠</h1>
+    <p class="subtext">Tap the cookie to crack open your lucky exam fortune!</p>
+    <div class="game-arena">
+      <div class="fortune-cookie" id="cookie-icon" onclick="openCookie()">🥠</div>
+      <p id="cookie-text" style="display:none; font-weight:700; font-size:1.05rem; padding: 12px; color:#c2255c; line-height: 1.5;"></p>
+    </div>
+    <button id="cookie-next-btn" style="display:none;" onclick="goToStep(4)">PICK ACTIVITIES →</button>
+  </div>
+
+  <!-- Step 4: Choose Activity (Matching sticker from Page 1) -->
+  <div id="step-4" class="screen">
+    <div class="avatar-frame">
+      <img src="https://media.giphy.com/media/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute Heart Sticker">
+    </div>
+    <h1>WHAT WOULD YOU LIKE TO DO? ✨</h1>
+    <div class="grid-options">
+      <div class="option-card" onclick="selectActivity(this, 'DINNER DATE 🍝')">DINNER DATE 🍝</div>
+      <div class="option-card" onclick="selectActivity(this, 'MOVIE NIGHT 🍿')">MOVIE NIGHT 🍿</div>
+      <div class="option-card" onclick="selectActivity(this, 'COFFEE & WALK ☕')">COFFEE & WALK ☕</div>
+      <div class="option-card" onclick="selectActivity(this, 'PICNIC 🧺🌷')">PICNIC 🧺🌷</div>
+      <div class="option-card" onclick="selectActivity(this, 'MINI WALK 🌸')">MINI WALK 🌸</div>
+      <div class="option-card" onclick="selectActivity(this, 'SURPRISE ME 🎁')">SURPRISE ME 🎁</div>
+    </div>
+
+    <!-- Surprise Box -->
+    <div id="surprise-box" style="display:none; width: 100%;">
+      <p class="subtext" style="color: #ff3366; margin-bottom: 8px;">
+        Tell me what you'd like or how to surprise you (I'm really bad at surprises! 🙈):
+      </p>
+      <input type="text" id="surprise-input" placeholder="e.g. cozy cafe, favorite dessert...">
+    </div>
+
+    <button onclick="lockActivity()">LOCK IT IN →</button>
+  </div>
+
+  <!-- MINI GAME 3: Love Memory Match -->
+  <div id="step-game3" class="screen">
+    <h1>Match The Cute Pairs! 🧩</h1>
+    <p class="subtext">Find all matching pairs to unlock your note!</p>
+    <div class="game-arena">
+      <div class="memory-grid" id="memory-board"></div>
+    </div>
+    <div class="sub-msg" id="memory-msg">Pairs found: 0 / 4</div>
+  </div>
+
+  <!-- Step 5: Confirmation -->
+  <div id="step-5" class="screen">
+    <div class="avatar-frame">
+      <img src="https://media.giphy.com/media/T86i6yDyOYz7J6dPhf/giphy.gif" alt="Celebration Date">
+    </div>
+    <h1>IT'S A DATE! 💌</h1>
+    <div class="ticket-box">
+      <div>DATE: <span id="summary-date" style="color: #ff4d79;">--</span></div>
+      <div>ACTIVITY: <span id="summary-activity" style="color: #ff4d79;">--</span></div>
+      <div id="summary-surprise" style="display:none; font-size: 0.85rem; color: #ff3366; margin-top: 4px;"></div>
+    </div>
+    <button onclick="openNote()">✉️ 1 NEW MESSAGE FOR YOU</button>
+    <button onclick="restartAll()" style="margin-top: 14px; background: #fff; font-size: 0.8rem; padding: 8px 18px;">Restart ↺</button>
+  </div>
+
+</div>
+
+<!-- Modal Note Popup -->
+<div class="modal-overlay" id="note-modal">
+  <div class="retro-window">
+    <div class="window-header">
+      <span>✉ special_message_for_you.txt</span>
+      <button class="window-close" onclick="closeNote()">✕</button>
+    </div>
+    <div class="window-body">
+      <p>you’ve been working so hard for your exams, don’t forget to take care of yourself and get some rest too, okay? 🌷</p>
+      <br>
+      <p>once your exams are finally over, I’m treating you to something nice. 🎀✨ you deserve a little break after all that hard work. 🫶🏻</p>
+      <br>
+      <p>until then, keep going and do your best. you’ve got this! 💗 I’ll be cheering for you, always. 🌸</p>
+      <br>
+      <p style="text-align: right;">xoxo,<br><br><strong>Sonam Dorjee</strong></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  let noClickCount = 0;
+  let yesScale = 1;
+  let chosenDate = "";
+  let chosenActivity = "SURPRISE ME 🎁";
+
+  const noPhrases = [
+    "Are you sure? 🥺",
+    "Think about it again! 🎀",
+    "Pretty please? ✨",
+    "I promise it'll be fun! 🍰",
+    "Don't break my heart! 💔"
+  ];
+
+  function handleNoClick() {
+    noClickCount++;
+    yesScale += 0.35;
+    
+    const yesBtn = document.getElementById('btn-yes');
+    const noBtn = document.getElementById('btn-no');
+    const subMsg = document.getElementById('sub-msg');
+
+    yesBtn.style.transform = `scale(${yesScale})`;
+
+    if (noClickCount <= noPhrases.length) {
+      subMsg.innerText = noPhrases[noClickCount - 1];
+    } else {
+      subMsg.innerText = "No is no longer an option! 🤭💖";
+      noBtn.style.display = "none";
+    }
+  }
+
+  function goToStep(stepKey) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(`step-${stepKey}`).classList.add('active');
+    
+    if (stepKey === 'game1') startHeartGame();
+    if (stepKey === 'game3') initMemoryGame();
+  }
+
+  /* MINI GAME 1: Catch Heart */
+  let heartCaught = 0;
+  function startHeartGame() {
+    heartCaught = 0;
+    document.getElementById('game1-score').innerText = `Score: 0 / 3`;
+    moveHeart();
+  }
+  function moveHeart() {
+    const heart = document.getElementById('moving-heart');
+    const arena = document.getElementById('arena1');
+    const maxX = arena.clientWidth - 50;
+    const maxY = arena.clientHeight - 50;
+    heart.style.left = Math.floor(Math.random() * Math.max(maxX, 20)) + 'px';
+    heart.style.top = Math.floor(Math.random() * Math.max(maxY, 20)) + 'px';
+  }
+  function catchHeart() {
+    heartCaught++;
+    document.getElementById('game1-score').innerText = `Score: ${heartCaught} / 3 🎉`;
+    if (heartCaught >= 3) {
+      setTimeout(() => goToStep(3), 400);
+    } else {
+      moveHeart();
+    }
+  }
+
+  /* Date Logic */
+  function saveDate() {
+    const input = document.getElementById('date-input').value;
+    if (!input) {
+      alert("Please choose a date first! 🌸");
+      return;
+    }
+    const dateObj = new Date(input);
+    chosenDate = dateObj.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    });
+    goToStep('game2');
+  }
+
+  /* MINI GAME 2: Fortune Cookie */
+  function openCookie() {
+    const cookie = document.getElementById('cookie-icon');
+    const text = document.getElementById('cookie-text');
+    const nextBtn = document.getElementById('cookie-next-btn');
+
+    cookie.style.display = 'none';
+    text.innerText = "🍀 “Today’s fortune: stay calm, trust yourself, and let all your hard work shine. You’ve got this! ✨💗”";
+    text.style.display = 'block';
+    nextBtn.style.display = 'inline-block';
+  }
+
+  /* Activity Selection */
+  function selectActivity(element, activityName) {
+    document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+    element.classList.add('selected');
+    chosenActivity = activityName;
+
+    const surpriseBox = document.getElementById('surprise-box');
+    if (activityName.includes('SURPRISE ME')) {
+      surpriseBox.style.display = 'block';
+    } else {
+      surpriseBox.style.display = 'none';
+    }
+  }
+
+  function lockActivity() {
+    goToStep('game3');
+  }
+
+  /* MINI GAME 3: Love Memory Match Game */
+  const memoryIcons = ['🌷', '🌷', '🎀', '🎀', '🍰', '🍰', '✨', '✨'];
+  let flippedCards = [];
+  let matchedPairs = 0;
+
+  function initMemoryGame() {
+    const board = document.getElementById('memory-board');
+    board.innerHTML = '';
+    flippedCards = [];
+    matchedPairs = 0;
+    document.getElementById('memory-msg').innerText = "Pairs found: 0 / 4";
+
+    const shuffled = [...memoryIcons].sort(() => 0.5 - Math.random());
+    shuffled.forEach((icon, index) => {
+      const card = document.createElement('div');
+      card.className = 'memory-card';
+      card.dataset.icon = icon;
+      card.dataset.index = index;
+      card.innerText = '❓';
+      card.onclick = () => flipMemoryCard(card);
+      board.appendChild(card);
+    });
+  }
+
+  function flipMemoryCard(card) {
+    if (flippedCards.length === 2 || card.classList.contains('flipped')) return;
+
+    card.classList.add('flipped');
+    card.innerText = card.dataset.icon;
+    flippedCards.push(card);
+
+    if (flippedCards.length === 2) {
+      if (flippedCards[0].dataset.icon === flippedCards[1].dataset.icon) {
+        matchedPairs++;
+        document.getElementById('memory-msg').innerText = `Pairs found: ${matchedPairs} / 4 🎉`;
+        flippedCards = [];
+        if (matchedPairs === 4) {
+          setTimeout(() => {
+            document.getElementById('summary-date').innerText = chosenDate;
+            document.getElementById('summary-activity').innerText = chosenActivity;
+            const hint = document.getElementById('surprise-input').value;
+            if (hint.trim() !== "") {
+              const sumS = document.getElementById('summary-surprise');
+              sumS.style.display = 'block';
+              sumS.innerText = `Hint: "${hint}"`;
+            }
+            goToStep(5);
+          }, 600);
+        }
+      } else {
+        setTimeout(() => {
+          flippedCards.forEach(c => {
+            c.classList.remove('flipped');
+            c.innerText = '❓';
+          });
+          flippedCards = [];
+        }, 700);
+      }
+    }
+  }
+
+  function openNote() {
+    document.getElementById('note-modal').style.display = 'flex';
+  }
+
+  function closeNote() {
+    document.getElementById('note-modal').style.display = 'none';
+  }
+
+  function restartAll() {
+    noClickCount = 0;
+    yesScale = 1;
+    chosenDate = "";
+    chosenActivity = "SURPRISE ME 🎁";
+    document.getElementById('btn-yes').style.transform = "scale(1)";
+    document.getElementById('btn-no').style.display = "inline-block";
+    document.getElementById('sub-msg').innerText = "";
+    document.getElementById('cookie-icon').style.display = "block";
+    document.getElementById('cookie-text').style.display = "none";
+    document.getElementById('cookie-next-btn').style.display = "none";
+    document.getElementById('surprise-input').value = "";
+    document.getElementById('summary-surprise').style.display = "none";
+    closeNote();
+    goToStep(1);
+  }
+
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('date-input').min = today;
+  document.getElementById('date-input').value = today;
+</script>
+
+</body>
+</html>
