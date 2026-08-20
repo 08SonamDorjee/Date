@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Go Out With Me?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(180deg, #ffc0cb 0%, #ff9ebb 50%, #f77099 100%);
+      font-family: 'Quicksand', sans-serif;
+      color: #732241;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .clouds {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 140px;
+      background: radial-gradient(circle at 50% 100%, #ffffff88 40px, transparent 45px);
+      background-size: 80px 140px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 90%;
+      max-width: 480px;
+      padding: 30px 20px;
+    }
+
+    .avatar-frame {
+      width: 140px;
+      height: 140px;
+      background: #fff;
+      border: 4px solid #732241;
+      box-shadow: 4px 4px 0px #ff6584, inset 3px 3px 0px #ffe4ec;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .avatar-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 20px;
+    }
+
+    p.subtext {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #943958;
+      margin-top: -10px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .btn-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      width: 100%;
+      min-height: 80px;
+    }
+
+    button {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 12px 24px;
+      cursor: pointer;
+      border: 3px solid #732241;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #732241;
+      box-shadow: 3px 3px 0px #732241;
+      transition: transform 0.15s ease, background-color 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #fff0f5;
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px #732241;
+    }
+
+    .btn-yes {
+      background: #ff4d79;
+      color: #ffffff;
+      box-shadow: 3px 3px 0px #732241;
+    }
+
+    .btn-yes:hover {
+      background: #ff3366;
+    }
+
+    .btn-no {
+      background: #ffffff;
+    }
+
+    .sub-msg {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #732241;
+      margin-top: 14px;
+      min-height: 20px;
+    }
+
+    input[type="date"] {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 12px 20px;
+      border: 3px solid #732241;
+      border-radius: 12px;
+      background: #ffffff;
+      color: #732241;
+      outline: none;
+      box-shadow: 3px 3px 0px #ff6584;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .grid-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .option-card {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 14px 10px;
+      background: #fff;
+      border: 3px solid #732241;
+      border-radius: 14px;
+      box-shadow: 3px 3px 0px #ff6584;
+      cursor: pointer;
+      line-height: 1.4;
+      transition: transform 0.15s ease;
+    }
+
+    .option-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .option-card.selected {
+      background: #ff4d79;
+      color: #fff;
+      box-shadow: 3px 3px 0px #732241;
+    }
+
+    .ticket-box {
+      background: #ffffffdd;
+      border: 3px dashed #732241;
+      border-radius: 16px;
+      padding: 20px 16px;
+      width: 100%;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 2;
+      margin-bottom: 24px;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 10;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .retro-window {
+      background: #fff;
+      border: 4px solid #732241;
+      box-shadow: 6px 6px 0px #ff6584;
+      width: 85%;
+      max-width: 380px;
+      border-radius: 16px;
+      overflow: hidden;
+      animation: pop 0.2s ease-out;
+    }
+
+    .window-header {
+      background: #ffccd9;
+      border-bottom: 3px solid #732241;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .window-close {
+      cursor: pointer;
+      border: 2px solid #732241;
+      background: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .window-body {
+      padding: 24px 20px;
+      font-family: 'Caveat', cursive;
+      font-size: 1.6rem;
+      line-height: 1.4;
+      text-align: left;
+      color: #52182c;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.85); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .screen { display: none; flex-direction: column; align-items: center; width: 100%; }
+    .screen.active { display: flex; }
+  </style>
+</head>
+<body>
+
+<div class="clouds"></div>
+
+<div class="container">
+
+  <!-- Step 1: Proposal -->
+  <div id="step-1" class="screen active">
+    <div class="avatar-frame">
+      <img id="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHYyOXl0N3JvZjJ5dDFqbnB1NDRna2cxdHBocXJ5dTFxdWRmdm1uMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute Cat">
+    </div>
+    <h1>Will you go out with me?</h1>
+    <div class="btn-group">
+      <button class="btn-yes" id="btn-yes" onclick="goToStep(2)">YES</button>
+      <button class="btn-no" id="btn-no" onclick="handleNoClick()">No</button>
+    </div>
+    <div class="sub-msg" id="sub-msg"></div>
+  </div>
+
+  <!-- Step 2: Yay Screen -->
+  <div id="step-2" class="screen">
+    <div class="avatar-frame">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2RveDk1cHRsOHp1cnU5cWoxbzZvb3d6cW51enFjdmpiNXpqenZ5eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/T86i6yDyOYz7J6dPhf/giphy.gif" alt="Happy Bears">
+    </div>
+    <h1>YAY!</h1>
+    <p class="subtext">I'm so glad u said yes.</p>
+    <button onclick="goToStep(3)">PRESS TO CONTINUE →</button>
+  </div>
+
+  <!-- Step 3: Date Picker -->
+  <div id="step-3" class="screen">
+    <div class="avatar-frame">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZkNzhycTltM3RydGg4cG9qYml0NXp0a3V0Ynd2bzhwbG9sY2t5eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/LnQjpWaON8nhr21vNW/giphy.gif" alt="Excited Cat">
+    </div>
+    <h1>PICK A DATE</h1>
+    <p class="subtext">Choose the day for our cute little plan</p>
+    <input type="date" id="date-input">
+    <button onclick="saveDate()">CONTINUE →</button>
+  </div>
+
+  <!-- Step 4: Choose Activity -->
+  <div id="step-4" class="screen">
+    <div class="avatar-frame">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWc1bWc3azJ5eXpkbHRzMm9sZzlyOTNkc2R3aXdvbmxodnVkaHhvaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/ICOgUNjpvO0PC/giphy.gif" alt="Thinking Cat">
+    </div>
+    <h1>WHAT WOULD YOU LIKE TO DO?</h1>
+    <div class="grid-options">
+      <div class="option-card" onclick="selectActivity(this, 'DINNER DATE')">DINNER DATE</div>
+      <div class="option-card" onclick="selectActivity(this, 'MOVIE NIGHT')">MOVIE NIGHT</div>
+      <div class="option-card" onclick="selectActivity(this, 'COFFEE & WALK')">COFFEE & WALK</div>
+      <div class="option-card" onclick="selectActivity(this, 'PICNIC')">PICNIC</div>
+      <div class="option-card" onclick="selectActivity(this, 'MINI GOLF')">MINI GOLF</div>
+      <div class="option-card" onclick="selectActivity(this, 'SURPRISE ME')">SURPRISE ME</div>
+    </div>
+    <button onclick="lockActivity()">LOCK IT IN →</button>
+  </div>
+
+  <!-- Step 5: Date Confirmation & Final Card -->
+  <div id="step-5" class="screen">
+    <div class="avatar-frame">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2RveDk1cHRsOHp1cnU5cWoxbzZvb3d6cW51enFjdmpiNXpqenZ5eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/T86i6yDyOYz7J6dPhf/giphy.gif" alt="Love Bears">
+    </div>
+    <h1>IT'S A DATE!</h1>
+    <div class="ticket-box">
+      <div>DATE: <span id="summary-date" style="color: #ff4d79;">--</span></div>
+      <div>ACTIVITY: <span id="summary-activity" style="color: #ff4d79;">--</span></div>
+    </div>
+    <button onclick="openNote()">✉ 1 NEW MESSAGE</button>
+  </div>
+
+</div>
+
+<!-- Step 6: Retro Popup Note -->
+<div class="modal-overlay" id="note-modal">
+  <div class="retro-window">
+    <div class="window-header">
+      <span>♥ love_note.txt</span>
+      <button class="window-close" onclick="closeNote()">✕</button>
+    </div>
+    <div class="window-body">
+      <p>you're really cute no matter what. don't let anyone tell you any different, okay?</p>
+      <br>
+      <p>you make every ordinary day feel special.</p>
+      <br>
+      <p>today and every day, I celebrate you and us.</p>
+      <br>
+      <p style="text-align: right;">xoxo,<br>your name</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  let noClickCount = 0;
+  let yesScale = 1;
+  let chosenDate = "";
+  let chosenActivity = "SURPRISE ME";
+
+  const noPhrases = [
+    "Are you sure?",
+    "Better say yes!",
+    "Babe please :<",
+    "Don't do this",
+    "I'm gonna cry...",
+    "Heart broken :("
+  ];
+
+  function handleNoClick() {
+    noClickCount++;
+    yesScale += 0.35;
+    
+    const yesBtn = document.getElementById('btn-yes');
+    const noBtn = document.getElementById('btn-no');
+    const subMsg = document.getElementById('sub-msg');
+
+    yesBtn.style.transform = `scale(${yesScale})`;
+
+    if (noClickCount <= noPhrases.length) {
+      subMsg.innerText = noPhrases[noClickCount - 1];
+    } else {
+      subMsg.innerText = "No is no longer an option!";
+      noBtn.style.display = "none";
+    }
+  }
+
+  function goToStep(stepNumber) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(`step-${stepNumber}`).classList.add('active');
+  }
+
+  function saveDate() {
+    const input = document.getElementById('date-input').value;
+    if (!input) {
+      alert("Please select a date first!");
+      return;
+    }
+    const dateObj = new Date(input);
+    chosenDate = dateObj.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    });
+    goToStep(4);
+  }
+
+  function selectActivity(element, activityName) {
+    document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+    element.classList.add('selected');
+    chosenActivity = activityName;
+  }
+
+  function lockActivity() {
+    document.getElementById('summary-date').innerText = chosenDate;
+    document.getElementById('summary-activity').innerText = chosenActivity;
+    goToStep(5);
+  }
+
+  function openNote() {
+    document.getElementById('note-modal').style.display = 'flex';
+  }
+
+  function closeNote() {
+    document.getElementById('note-modal').style.display = 'none';
+  }
+
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('date-input').min = today;
+  document.getElementById('date-input').value = today;
+</script>
+
+</body>
+</html>
